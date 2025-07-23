@@ -4,7 +4,6 @@
 /out/
 
 # vcpkg build and installed files (optional: exclude if you want to track vcpkg folder)
-/vcpkg/
 /vcpkg_installed/
 
 # CMake generated files
