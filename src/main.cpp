@@ -12,8 +12,8 @@ int main()
     {
         if (glfwGetKey(window.getGLFWwindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS)
             window.close();
-
         window.update();
+
         glfwPollEvents();
     }
 
