@@ -2,17 +2,21 @@
 
 This is an attempt at creating a toy project that is similar to IMGUI
 
-# Install Packages
+Currently this is only tested and ran on Linux.
 
-```
-./vcpkg/vcpkg install
-```
+# Setup
 
-# build and Run
+### Clone the repository
 ```
-chmod +x ./run.sh
+git clone --recursive https://github.com/mhaneman/My_GUI.git
 ```
 
+### setup VCPKG and install deps
+```
+./run.sh init
+```
+
+### build and the project
 ```
 ./run.sh build
 ```

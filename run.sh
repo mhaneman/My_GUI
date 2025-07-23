@@ -3,7 +3,7 @@ TESTS="tests"
 
 if [[ $1 = "init" ]]; then
     echo "Init Project"
-    ./vcpkg/vcpkg ./bootstrap-vcpkg.sh -disableMetrics
+    ./vcpkg/bootstrap-vcpkg.sh -disableMetrics
     ./vcpkg/vcpkg install
 fi
 
