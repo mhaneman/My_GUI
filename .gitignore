@@ -1,0 +1,43 @@
+# Build folders
+/build/
+/bin/
+/out/
+
+# vcpkg build and installed files (optional: exclude if you want to track vcpkg folder)
+/vcpkg/
+/vcpkg_installed/
+
+# CMake generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+CTestTestfile.cmake
+
+# Executables and object files
+*.exe
+*.exe~
+*.out
+*.app
+*.o
+*.obj
+*.so
+*.dll
+*.dylib
+*.lib
+*.a
+
+# Visual Studio / IDE files (if using VS)
+/.vscode/
+/*.VC.db
+/*.VC.VC.opendb
+/*.suo
+/*.user
+/*.ipch
+/*.pdb
+/*.idb
+/*.cache
+
+# OS generated files
+.DS_Store
+Thumbs.db

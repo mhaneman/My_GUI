@@ -1,0 +1,5 @@
+{
+  "name": "my-gui",
+  "version": "0.1.0",
+  "dependencies": ["glfw3", "glad", "catch2"]
+}
