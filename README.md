@@ -9,6 +9,7 @@ Currently this is only tested and ran on Linux.
 ### Clone the repository
 ```
 git clone --recursive https://github.com/mhaneman/My_GUI.git
+cd My_GUI
 ```
 
 ### setup VCPKG and install deps
@@ -16,7 +17,7 @@ git clone --recursive https://github.com/mhaneman/My_GUI.git
 ./run.sh init
 ```
 
-### build and the project
+### build and run the project
 ```
 ./run.sh build
 ```
