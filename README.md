@@ -6,18 +6,16 @@ Currently this is only tested and ran on Linux.
 
 # Setup
 
-### Clone the repository
+### Clone this repository
 ```
 git clone --recursive https://github.com/mhaneman/My_GUI.git
 cd My_GUI
 ```
 
-### setup VCPKG and install deps
+### Run the `proj.sh` script to get setup
 ```
-./run.sh init
+./proj.sh
 ```
+1. Choose `Install Packages` option
+2. Choose `Run & Build` Option
 
-### build and run the project
-```
-./run.sh build
-```

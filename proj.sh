@@ -1,31 +1,51 @@
+#!/bin/bash
 PROJ="My_GUI"
 TESTS="tests"
 
-if [[ $1 = "init" ]]; then
-    echo "Init Project"
-    ./vcpkg/bootstrap-vcpkg.sh -disableMetrics
-    ./vcpkg/vcpkg install
-fi
+init() {
+	echo "Init Project"
+	./vcpkg/bootstrap-vcpkg.sh -disableMetrics
+	./vcpkg/vcpkg install
+}
 
-if [[ $1 = "build" ]]; then
-    echo "Building Project"
-    mkdir build
-    cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
-    cmake --build ./build
-    ./build/$PROJ
-fi
+build() {
+	echo "Building Project"
+    	mkdir build
+    	cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
+    	cmake --build ./build
+}
 
-if [[ $1 = "run" ]]; then
-    echo "Running Project"
-    ./build/$PROJ
-fi
+run() {
+	echo "Running Project"
+	./build/$PROJ
+}
 
-if [[ $1 = "tests" ]]; then
-    echo "Running Tests"
-    ./build/$TESTS/$TESTS
-fi
+clean() {
+	echo "Cleaning Project"
+	rm -rf ./build
+}
 
-if [[ $1 = "clean" ]]; then
-    echo "Cleaning Project"
-    rm -rf ./build
-fi
+while true; do
+  clear
+  tput bold; tput setaf 6
+  echo "=== My GUI ==="
+  tput sgr0
+  echo
+
+  PS3="Choose an option: "
+  select opt in "Install Packages" "Build" "Run" "Build & Run" "Clean" "Exit"; do
+    case $REPLY in
+      1) init; break ;;
+      2) build; break ;;
+      3) run; break ;;
+      4) build; run; break ;;
+      5) clean; break ;;
+      6) echo "Exiting..."; exit 0 ;;
+      *) echo "❌ Invalid option"; sleep 1; break ;;
+    esac
+  done
+
+  # Pause and redisplay menu
+  echo
+  read -rp "Press Enter to continue..."
+done
