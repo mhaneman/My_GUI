@@ -8,7 +8,8 @@ void framebufferSizeCallback(GLFWwindow* window, int width, int height)
     glViewport(0, 0, width, height);
 }
 
-Window::Window(const char* fileName)
+Window::Window(const char* windowName, const unsigned int width, const unsigned int height) :
+    m_width(width), m_height(height), m_windowName(windowName)
 {
     if (!glfwInit())
     {
@@ -24,16 +25,16 @@ Window::Window(const char* fileName)
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
-    window = glfwCreateWindow(1600, 1200, "My Gui", NULL, NULL);
+    m_window = glfwCreateWindow(width, height, windowName, NULL, NULL);
 
-    if (!window)
+    if (!m_window)
     {
         std::cerr << "Failed to create GLFW window\n";
         glfwTerminate();
         std::exit(EXIT_FAILURE);
     }
 
-    glfwMakeContextCurrent(window);
+    glfwMakeContextCurrent(m_window);
 
     if (!gladLoadGL())
     {
@@ -41,19 +42,23 @@ Window::Window(const char* fileName)
         std::exit(EXIT_FAILURE);
     }
 
-    glViewport(0, 0, 800, 600);
-    glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
+    glViewport(0, 0, width, height);
+    glfwSetFramebufferSizeCallback(m_window, framebufferSizeCallback);
 }
 
 Window::~Window()
 {
-    glfwDestroyWindow(window);
+    glfwDestroyWindow(m_window);
     glfwTerminate();
 }
 
-void Window::update()
+void Window::startFrame() const
 {
-    glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
+    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
-    glfwSwapBuffers(window);
+}
+
+void Window::endFrame() const
+{
+    glfwSwapBuffers(m_window);
 }

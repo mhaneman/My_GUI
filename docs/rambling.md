@@ -25,3 +25,12 @@ Reasons why:
 #### Hyprland
 
 1. css like config file to control styles
+
+
+## 08/04/2025
+I think I have a pretty good idea on how to do a basic button now.
+First I need to fix the shader class
+  1. save the shaderProgramID and create getter for it.
+  2. cleanup duplicate code
+
+Now that I have a decent understanding of VBOs and VBAs, I feel I can draw a simple button. Hopefully that commit will come soon

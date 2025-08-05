@@ -1,7 +1,7 @@
 # Todos
 
 1. Finish shader class
-2. Render basic shapes to the screen
+2. ~~Render basic shapes to the screen~~
 3. Decide on implementing a specific system
 4. Solidify CMake build system
 5. figure out how to property utilize catch2

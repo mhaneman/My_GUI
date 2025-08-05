@@ -3,12 +3,12 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-void Shader::loadFrag(const char* filePath)
+
+Shader::Shader(const char* vertPath, const char* fragPath)
 {
-    std::expected fragmentShaderLoad = readFile(filePath);
+    std::expected fragmentShaderLoad = readFile(fragPath);
 
     if (!fragmentShaderLoad.has_value()) {
         std::cerr << "Failed load Fragment Shader\n";
@@ -20,11 +20,8 @@ void Shader::loadFrag(const char* filePath)
     unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
     glCompileShader(fragmentShader);
-}
 
-void Shader::loadVert(const char* filePath)
-{
-    std::expected vertexShaderLoad = readFile(filePath);
+    std::expected vertexShaderLoad = readFile(vertPath);
 
     if (!vertexShaderLoad.has_value()) {
         std::cerr << "Failed to load Vertex Shader\n";
@@ -36,6 +33,16 @@ void Shader::loadVert(const char* filePath)
     unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
     glCompileShader(vertexShader);
+
+    // Shader program
+    shaderProgramID = glCreateProgram();
+    glAttachShader(shaderProgramID, vertexShader);
+    glAttachShader(shaderProgramID, fragmentShader);
+    glLinkProgram(shaderProgramID);
+
+    // Delete shaders
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
 }
 
 const std::expected<std::string, std::string> Shader::readFile(const char* filePath)
@@ -52,7 +59,6 @@ const std::expected<std::string, std::string> Shader::readFile(const char* fileP
         return buffer.str();
 }
 
-// hate this... just return a boolean
 const std::expected<std::string, std::string> checkCompileErrors(unsigned int shader)
 {
     int success;
