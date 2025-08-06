@@ -1,18 +1,10 @@
 #include "ui_button.hpp"
 
-#include <iostream>
 #include <glad/glad.h>
 
 UIButton::UIButton(BoundingBox boundingBox, glm::vec3 color, Shader& shader) :
     m_boundingBox(boundingBox), m_color(color), m_shader(shader)
 {
-    // float vertices[] = {
-    //     m_boundingBox.x + m_boundingBox.width,  m_boundingBox.y + m_boundingBox.height, 0.0f,   color.x, color.y, color.z,
-    //     m_boundingBox.x + m_boundingBox.width,  m_boundingBox.y, 0.0f,   color.x, color.y, color.z,
-    //     m_boundingBox.x,  m_boundingBox.y, 0.0f,   color.x, color.y, color.z,
-    //     m_boundingBox.x,  m_boundingBox.y + m_boundingBox.height, 0.0f,   color.x, color.y, color.z,
-    // };
-
     float vertices[] = {
         1.0f, 1.0f,
         1.0f, 0.0f,
@@ -53,7 +45,8 @@ UIButton::UIButton(BoundingBox boundingBox, glm::vec3 color, Shader& shader) :
 
 UIButton::~UIButton()
 {
-
+    glDeleteVertexArrays(1, &m_VAO);
+    glDeleteBuffers(1, &m_VBO);
 }
 
 void UIButton::draw() const

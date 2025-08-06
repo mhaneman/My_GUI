@@ -44,6 +44,10 @@ Window::Window(const char* windowName, const unsigned int width, const unsigned 
 
     glViewport(0, 0, width, height);
     glfwSetFramebufferSizeCallback(m_window, framebufferSizeCallback);
+
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 Window::~Window()

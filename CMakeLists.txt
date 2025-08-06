@@ -21,6 +21,7 @@ add_executable(
     src/window.cpp
     src/shader.cpp
     src/ui_button.cpp
+    src/text_renderer.cpp
     )
 
 target_include_directories(${PROJECT_NAME} PUBLIC include)
