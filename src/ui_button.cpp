@@ -6,11 +6,18 @@
 UIButton::UIButton(BoundingBox boundingBox, glm::vec3 color, Shader& shader) :
     m_boundingBox(boundingBox), m_color(color), m_shader(shader)
 {
+    // float vertices[] = {
+    //     m_boundingBox.x + m_boundingBox.width,  m_boundingBox.y + m_boundingBox.height, 0.0f,   color.x, color.y, color.z,
+    //     m_boundingBox.x + m_boundingBox.width,  m_boundingBox.y, 0.0f,   color.x, color.y, color.z,
+    //     m_boundingBox.x,  m_boundingBox.y, 0.0f,   color.x, color.y, color.z,
+    //     m_boundingBox.x,  m_boundingBox.y + m_boundingBox.height, 0.0f,   color.x, color.y, color.z,
+    // };
+
     float vertices[] = {
-        m_boundingBox.x + m_boundingBox.halfWidth,  m_boundingBox.y + m_boundingBox.halfHeight, 0.0f,   color.x, color.y, color.z,
-        m_boundingBox.x + m_boundingBox.halfWidth,  m_boundingBox.y - m_boundingBox.halfHeight, 0.0f,   color.x, color.y, color.z,
-        m_boundingBox.x - m_boundingBox.halfWidth,  m_boundingBox.y - m_boundingBox.halfHeight, 0.0f,   color.x, color.y, color.z,
-        m_boundingBox.x - m_boundingBox.halfWidth,  m_boundingBox.y + m_boundingBox.halfHeight, 0.0f,   color.x, color.y, color.z,
+        1.0f, 1.0f,
+        1.0f, 0.0f,
+        0.0f, 0.0f,
+        0.0f, 1.0f,
     };
 
     unsigned int indices[] = {
@@ -33,11 +40,11 @@ UIButton::UIButton(BoundingBox boundingBox, glm::vec3 color, Shader& shader) :
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     // bind both to the vertex attribute pointer
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
+    // glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(2 * sizeof(float)));
+    // glEnableVertexAttribArray(1);
 
     // Unbind
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -52,18 +59,26 @@ UIButton::~UIButton()
 void UIButton::draw() const
 {
     m_shader.use();
+    m_shader.setVec2("uPosition", m_boundingBox.x, m_boundingBox.y);
+    m_shader.setVec2("uSize", m_boundingBox.width, m_boundingBox.height);
+    m_shader.setVec3("uColor", m_color);
+
     glBindVertexArray(m_VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 
-void UIButton::update(glm::vec2 mousePos)
+void UIButton::update(glm::vec2 mousePos, bool isClicked)
 {
-    std::cout << mousePos.x << ", " << mousePos.y << "\n";
+    // std::cout << mousePos.x << ", " << mousePos.y << "\n";
 
-    isHovered = (mousePos.x >= m_boundingBox.x && mousePos.x <= m_boundingBox.x + m_boundingBox.halfWidth &&
-                 mousePos.y >= m_boundingBox.y && mousePos.y <= m_boundingBox.y + m_boundingBox.halfHeight);
+    isHovered = (mousePos.x >= m_boundingBox.x && mousePos.x <= m_boundingBox.x + m_boundingBox.width &&
+                 mousePos.y >= m_boundingBox.y && mousePos.y <= m_boundingBox.y + m_boundingBox.height);
 
     if (isHovered) {
-        std::cout << "Is hovering" << "\n";
+        m_boundingBox.width = 200.0f;
+        m_boundingBox.height = 200.0f;
+    } else {
+        m_boundingBox.width = 100.0f;
+        m_boundingBox.height = 100.0f;
     }
 }

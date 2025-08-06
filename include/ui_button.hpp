@@ -5,10 +5,10 @@
 #include <glm/glm.hpp>
 
 struct BoundingBox {
-    float x = 0.1f;
-    float y = 0.1f;
-    float halfWidth = 0.2f;
-    float halfHeight = 0.1f;
+    float x = 100.0f;
+    float y = 100.0f;
+    float width = 100.0f;
+    float height = 50.0f;
 };
 
 class UIButton
@@ -17,7 +17,7 @@ class UIButton
         UIButton(BoundingBox boundingBox, glm::vec3 color, Shader& shader);
         ~UIButton();
         void draw() const;
-        void update(glm::vec2 mousePos);
+        void update(glm::vec2 mousePos, bool isClicked);
 
     private:
     BoundingBox m_boundingBox;

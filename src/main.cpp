@@ -8,29 +8,27 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include <iostream>
 
 int main()
 {
     // setup window
     Window window = Window{"My GUI", 800, 800};
+    glm::mat4 orthoProjection = glm::ortho(0.0f, static_cast<float>(window.getWidth()), static_cast<float>(window.getHeight()), 0.0f);
 
     // setup shader
-    // ------------------------------------------------------------------------------
-    Shader shader = Shader{"./shaders/simpleVert.glsl", "./shaders/simpleFrag.glsl"};
-
-    glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(window.getWidth()), 0.0f, static_cast<float>(window.getHeight()));
+    Shader buttonShader = Shader{"./shaders/buttonVert.glsl", "./shaders/buttonFrag.glsl"};
 
     // setup button
     // ------------------------------------------------------------------------------
     BoundingBox box = {
-        .x = 500.0f,
-        .y = 500.0f,
-        .halfWidth = 100.0f,
-        .halfHeight = 100.0f
+        .x = 100.0f,
+        .y = 100.0f,
+        .width = 100.0f,
+        .height = 50.0f
     };
+
     glm::vec3 color = glm::vec3{0.655f, 0.475f, 0.851f};
-    UIButton button = {box, color, shader};
+    UIButton button = {box, color, buttonShader};
 
     while (!window.shouldClose())
     {
@@ -42,12 +40,14 @@ int main()
         double xpos, ypos;
         glfwGetCursorPos(window.getGLFWwindow(), &xpos, &ypos);
         glm::vec2 mousePos = glm::vec2{xpos, ypos};
+        bool isClicked = glfwGetMouseButton(window.getGLFWwindow(), GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS;
 
-        // this should probably just be added to the button class
-        int projectionLoc = glGetUniformLocation(shader.getProgramID(), "uProjection");
-        glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
+
+        buttonShader.setMat4("uProjection", orthoProjection);
+
         button.draw();
-        button.update(mousePos);
+
+        button.update(mousePos, isClicked);
 
         window.endFrame();
 
