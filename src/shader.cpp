@@ -35,14 +35,19 @@ Shader::Shader(const char* vertPath, const char* fragPath)
     glCompileShader(vertexShader);
 
     // Shader program
-    shaderProgramID = glCreateProgram();
-    glAttachShader(shaderProgramID, vertexShader);
-    glAttachShader(shaderProgramID, fragmentShader);
-    glLinkProgram(shaderProgramID);
+    m_shaderProgramID = glCreateProgram();
+    glAttachShader(m_shaderProgramID, vertexShader);
+    glAttachShader(m_shaderProgramID, fragmentShader);
+    glLinkProgram(m_shaderProgramID);
 
     // Delete shaders
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
+}
+
+Shader::~Shader()
+{
+    glDeleteProgram(m_shaderProgramID);
 }
 
 const std::expected<std::string, std::string> Shader::readFile(const char* filePath)

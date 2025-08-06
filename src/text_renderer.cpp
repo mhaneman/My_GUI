@@ -8,7 +8,7 @@ TextRenderer::TextRenderer(int width, int height)
     // Setup projection matrix
     glm::mat4 projection = glm::ortho(0.0f, float(width), 0.0f, float(height));
     textShader.use();
-    textShader.setMat4("projection", projection);
+    textShader.setMat4("uProjection", projection);
 
     // Setup VAO/VBO
     glGenVertexArrays(1, &VAO);

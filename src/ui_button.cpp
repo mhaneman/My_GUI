@@ -2,8 +2,10 @@
 
 #include <glad/glad.h>
 
-UIButton::UIButton(BoundingBox boundingBox, glm::vec3 color, Shader& shader) :
-    m_boundingBox(boundingBox), m_color(color), m_shader(shader)
+UIButton::UIButton(BoundingBox boundingBox, glm::vec3 color, Shader& shader)
+    : m_boundingBox(boundingBox)
+    , m_color(color)
+    , m_shader(shader)
 {
     float vertices[] = {
         1.0f, 1.0f,
@@ -31,12 +33,9 @@ UIButton::UIButton(BoundingBox boundingBox, glm::vec3 color, Shader& shader) :
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    // bind both to the vertex attribute pointer
+    // bind VBO and EBO to VAO
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
-
-    // glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(2 * sizeof(float)));
-    // glEnableVertexAttribArray(1);
 
     // Unbind
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -58,20 +57,13 @@ void UIButton::draw() const
 
     glBindVertexArray(m_VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+    glBindVertexArray(0);
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void UIButton::update(glm::vec2 mousePos, bool isClicked)
 {
-    // std::cout << mousePos.x << ", " << mousePos.y << "\n";
-
     isHovered = (mousePos.x >= m_boundingBox.x && mousePos.x <= m_boundingBox.x + m_boundingBox.width &&
                  mousePos.y >= m_boundingBox.y && mousePos.y <= m_boundingBox.y + m_boundingBox.height);
-
-    if (isHovered) {
-        m_boundingBox.width = 200.0f;
-        m_boundingBox.height = 200.0f;
-    } else {
-        m_boundingBox.width = 100.0f;
-        m_boundingBox.height = 100.0f;
-    }
 }

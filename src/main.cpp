@@ -20,40 +20,75 @@ int main()
     // setup shader
     // ------------------------------------------------------------------------------
     Shader buttonShader = Shader{"./res/shaders/buttonVert.glsl", "./res/shaders/buttonFrag.glsl"};
+    // Shader textShader = Shader{"./res/shaders/textVert.glsl", "./res/shaders/textFrag.glsl"};
+
+    buttonShader.use();
+    buttonShader.setMat4("uProjection", orthoProjection);
 
     // setup button
     // ------------------------------------------------------------------------------
-    BoundingBox box = {
-        .x = 200.0f,
-        .y = 200.0f,
-        .width = 100.0f,
-        .height = 50.0f
-    };
     glm::vec3 color = glm::vec3{0.655f, 0.475f, 0.851f};
-    UIButton button = {box, color, buttonShader};
+
+    UIButton button1 = {
+        BoundingBox{
+            .x = 200.0f,
+            .y = 200.0f,
+            .width = 100.0f,
+            .height = 100.0f
+        }, color, buttonShader};
+
+    UIButton button2 = {
+        BoundingBox{
+            .x = 10.0f,
+            .y = 400.0f,
+            .width = 50.0f,
+            .height = 50.0f
+        }, color, buttonShader};
+
+    UIButton button3 = {
+        BoundingBox{
+            .x = 400.0f,
+            .y = 10.0f,
+            .width = 200.0f,
+            .height = 200.0f
+        }, color, buttonShader};
+
+    UIButton button4 = {
+        BoundingBox{
+            .x = 500.0f,
+            .y = 100.0f,
+            .width = 200.0f,
+            .height = 200.0f
+        }, color, buttonShader};
 
     // setup text
     // ------------------------------------------------------------------------------
     TextRenderer text(window.getWidth(), window.getHeight());
-    text.LoadFont("./res/fonts/Roboto_Condensed-Black.ttf", 64);
+    text.LoadFont("./res/fonts/Roboto_Condensed-Black.ttf", 32);
 
     while (!window.shouldClose())
     {
         window.startFrame();
-        text.RenderText("Hello, My GUI!!!", 10.0f, 10.0f, 1.0f, glm::vec3(1.0, 1.0, 1.0));
+
+        // double xpos, ypos;
+        // glfwGetCursorPos(window.getGLFWwindow(), &xpos, &ypos);
+        // glm::vec2 mousePos = glm::vec2{xpos, ypos};
+        // bool isClicked = glfwGetMouseButton(window.getGLFWwindow(), GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS;
 
         if (glfwGetKey(window.getGLFWwindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS || glfwGetKey(window.getGLFWwindow(), GLFW_KEY_Q) == GLFW_PRESS )
             window.close();
 
-        double xpos, ypos;
-        glfwGetCursorPos(window.getGLFWwindow(), &xpos, &ypos);
-        glm::vec2 mousePos = glm::vec2{xpos, ypos};
-        bool isClicked = glfwGetMouseButton(window.getGLFWwindow(), GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS;
+        // draw text
+        // ------------------------------------------------------------------------------
+        text.RenderText("Hello, OpenGL!", 100.0f, 100.0f, 1.0f, glm::vec3(1.0, 1.0, 1.0));
+        text.RenderText("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", 10.0f, 200.0f, 1.0f, glm::vec3(1.0, 1.0, 1.0));
 
-
-        buttonShader.setMat4("uProjection", orthoProjection);
-        button.draw();
-        button.update(mousePos, isClicked);
+        // draw buttons
+        // ------------------------------------------------------------------------------
+        button1.draw();
+        button2.draw();
+        button3.draw();
+        button4.draw();
 
         window.endFrame();
 
