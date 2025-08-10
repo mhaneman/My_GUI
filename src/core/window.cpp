@@ -1,4 +1,4 @@
-#include "window.hpp"
+#include "My_GUI/core/window.hpp"
 
 #include <iostream>
 #include <cstdlib>

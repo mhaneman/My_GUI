@@ -18,14 +18,20 @@ find_package(Freetype REQUIRED)
 add_executable(
     ${PROJECT_NAME}
     src/main.cpp
-    src/window.cpp
-    src/shader.cpp
-    src/ui_button.cpp
-    src/text_renderer.cpp
+    src/core/window.cpp
+    src/core/shader.cpp
+    src/core/vao.cpp
+    src/core/text_renderer.cpp
+    src/widgets/ui_button.cpp
     )
 
 target_include_directories(${PROJECT_NAME} PUBLIC include)
-target_link_libraries(${PROJECT_NAME} PRIVATE glfw glad::glad glm::glm Freetype::Freetype)
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    glfw
+    glad::glad
+    glm::glm
+    Freetype::Freetype
+)
 
 if (APPLE)
     target_link_libraries(${PROJECT_NAME} PRIVATE "-framework Cocoa" "-framework OpenGL" "-framework IOKit" "-framework CoreVideo")

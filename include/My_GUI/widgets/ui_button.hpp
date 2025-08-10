@@ -1,6 +1,6 @@
 #pragma once
 
-#include "shader.hpp"
+#include "My_GUI/core/shader.hpp"
 #include <glm/ext/vector_float3.hpp>
 #include <glm/glm.hpp>
 

@@ -1,7 +1,7 @@
-#include "ui_button.hpp"
-#include "window.hpp"
-#include "shader.hpp"
-#include "text_renderer.hpp"
+#include "My_GUI/widgets/ui_button.hpp"
+#include "My_GUI/core/window.hpp"
+#include "My_GUI/core/shader.hpp"
+#include "My_GUI/core/text_renderer.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -20,7 +20,6 @@ int main()
     // setup shader
     // ------------------------------------------------------------------------------
     Shader buttonShader = Shader{"./res/shaders/buttonVert.glsl", "./res/shaders/buttonFrag.glsl"};
-    // Shader textShader = Shader{"./res/shaders/textVert.glsl", "./res/shaders/textFrag.glsl"};
 
     buttonShader.use();
     buttonShader.setMat4("uProjection", orthoProjection);
